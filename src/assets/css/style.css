@@ -1,0 +1,71 @@
+@charset "utf-8";
+html,body{
+  height: 100%;
+}
+
+/* toolbar - start */
+.v-toolbar__content .icon_cart{
+  padding: 5px 10px;
+  border-radius: 5px;
+  /* background-color: cadetblue; */
+}
+.v-toolbar__content button:hover,
+.v-toolbar__content .on{    
+  background-color: #ffd712;
+  color: #f00;
+}
+.v-toolbar__title{
+  padding: 10px;
+}
+/* toolbar - end */
+
+/* login - start*/
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 30px;
+  width: 450px;
+  margin: 0 auto;
+  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+  z-index: 9;
+}
+
+.card-signin .card-body {
+  padding: 30px 60px;
+}
+
+.card-signin .card-body hr{
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+/* login - end */
+
+/* home-store-list - start */
+/* .v-card__subtitle, .v-card__text, .v-card__title{
+  padding: 10px;
+} */
+/* home-store-list - end */
+
+
+/* Device: Small */
+/* @media (max-width: 480px){
+  .v-application .menu ul{
+      padding: 0;
+  }
+  .menu ul li{        
+      margin: 0 5px;
+      font-size: 15px;
+  }
+  .menu ul li a{
+      padding: 5px;
+  }
+  .card {
+      width: 100%;
+  }
+} */
