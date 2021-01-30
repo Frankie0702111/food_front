@@ -1,6 +1,6 @@
 <template>
   <v-main class="grey lighten-2">
-    <!-- <v-carousel hide-delimiters progress>
+    <v-carousel hide-delimiters progress>
       <v-carousel-item
         v-for="(item, i) in items"
         :key="i"
@@ -8,7 +8,7 @@
         reverse-transition="fade-transition"
         transition="fade-transition"
       ></v-carousel-item>
-    </v-carousel> -->
+    </v-carousel>
 
     <v-container>
       <v-lazy
@@ -45,22 +45,22 @@ import resource from "@/api/resource";
 const stores_resource = new resource("web_store");
 export default {
   data: () => ({
-    // items: [
-    //   {
-    //     src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
-    //   },
-    //   {
-    //     src: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg",
-    //   },
-    //   {
-    //     src: "https://cdn.vuetifyjs.com/images/carousel/bird.jpg",
-    //   },
-    //   {
-    //     src: "https://cdn.vuetifyjs.com/images/carousel/planet.jpg",
-    //   },
-    // ],
+    items: [
+      {
+        src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
+      },
+      {
+        src: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg",
+      },
+      {
+        src: "https://cdn.vuetifyjs.com/images/carousel/bird.jpg",
+      },
+      {
+        src: "https://cdn.vuetifyjs.com/images/carousel/planet.jpg",
+      },
+    ],
     stores_list:[],
-    isActive:true,
+    isActive:false,
   }),
   created() {
     this.stores();
