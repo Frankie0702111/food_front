@@ -36,14 +36,11 @@ html,body{
   z-index: 9;
 }
 
-<<<<<<< HEAD
 .card.card-signin{
   margin-top: auto;
   margin-bottom: auto;
 }
 
-=======
->>>>>>> 755cf319a6a8f8ac997dc373bd87831f59b57fa7
 .card-signin .card-body {
   padding: 30px 60px;
 }

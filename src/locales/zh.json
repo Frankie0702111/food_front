@@ -3,7 +3,6 @@
   "account": "帳號",
   "password": "密碼",
   "captcha": "驗證碼",
-<<<<<<< HEAD
   "home": "首頁",
   "login": "登入",
   "logout": "登出",
@@ -13,10 +12,4 @@
   "create": "新增",
   "submit": "送出",
   "cancel": "取消"
-=======
-  "login": "登入",
-  "logout": "登出",
-  "change_password": "修改密碼",
-  "shopping_cart": "購物車"
->>>>>>> 755cf319a6a8f8ac997dc373bd87831f59b57fa7
 }
