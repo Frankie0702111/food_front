@@ -7,26 +7,16 @@ import Layout from '@/layout/web';
 Vue.use(VueRouter)
 
 function loadView(view){
-<<<<<<< HEAD
   return () => import(/* webpackChunkName: 'loadview/[request]' */ `@/views/web/${view}`)
-=======
-  return () => import(/* webpackChunkName: 'loadview/[request]' */ `@/views/${view}`)
->>>>>>> 755cf319a6a8f8ac997dc373bd87831f59b57fa7
 }
 
 export const routes = [
   // ...admin,
   {
     path: '/',
-<<<<<<< HEAD
     name: 'Welcome',
     meta:{ title: 'Welcome' },
     component: Layout,
-=======
-    component: Layout,
-    name: 'Welcome',
-    meta:{ title: 'Welcome' },
->>>>>>> 755cf319a6a8f8ac997dc373bd87831f59b57fa7
     children:[
       {
         path: '',
@@ -54,17 +44,6 @@ export const routes = [
       }
     ]
   },
-<<<<<<< HEAD
-=======
-  // {
-  //   path: '/about',
-  //   name: 'About',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  // }
->>>>>>> 755cf319a6a8f8ac997dc373bd87831f59b57fa7
   { path: '*', component: Page404, hidden: true, }
 ]
 
