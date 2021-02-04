@@ -20,7 +20,8 @@
       >
         <v-row>
           <v-col v-for="store_list in stores_list" v-bind:key="store_list.id" cols="3">
-            <v-card class="mx-auto" max-width="350" :to="{path:`/menu/${store_list.id}`}">
+            <v-card class="mx-auto" max-width="350" @click="duplicate_store(store_list.id)">
+            <!-- <v-card class="mx-auto" max-width="350" :to="{path:`/menu/${store_list.id}`}"> -->
               <div class="wei-grid">
                 <v-img
                   class="white--text align-end wei-image1"
@@ -86,7 +87,18 @@ export default {
         });
       });
     },
+    duplicate_store(store_id) {
+      if(this.$store.state.cart.cartitems.length > 0 && store_id != this.$store.state.cart.cartitems[0].data.store_id){
+        this.$store.dispatch("cart/deleteallitems", {store_id}).then(() => {
+          this.$router.push({ path: '/menu/'+store_id });
+        });
+      } else {
+        this.$router.push({ path: '/menu/'+store_id });
+      }
+    }
   },
+  mounted: function(){
+  }
 };
 </script>
 <style scoped>
