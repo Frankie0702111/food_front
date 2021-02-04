@@ -1,5 +1,5 @@
 <template>
-  <v-main class="grey lighten-2">
+  <v-main class="lighten-2">
     <v-carousel hide-delimiters progress>
       <v-carousel-item
         v-for="(item, i) in items"
@@ -20,7 +20,8 @@
       >
         <v-row>
           <v-col v-for="store_list in stores_list" v-bind:key="store_list.id" cols="3">
-            <v-card class="mx-auto" max-width="350" :to="{path:`/menu/${store_list.id}`}">
+            <v-card class="mx-auto" max-width="350" elevation="0" @click="duplicate_store(store_list.id)">
+            <!-- <v-card class="mx-auto" max-width="350" :to="{path:`/menu/${store_list.id}`}"> -->
               <div class="wei-grid">
                 <v-img
                   class="white--text align-end wei-image1"
@@ -28,10 +29,24 @@
                   :src="store_list.img"
                 ></v-img>
               </div>
-              <v-card-subtitle class="pb-0">{{ store_list.name }}</v-card-subtitle>
-              <v-card-text class="text--primary">
-                <div>Whitehaven Beach</div>
-              </v-card-text>
+              <v-card-subtitle class="pb-0">
+                {{ store_list.name }}
+                <v-card-text class="text--primary">
+                  <v-row>
+                    <v-rating
+                      :value="store_list.rating"
+                      color="amber"
+                      dense
+                      half-increments
+                      readonly
+                      size="13"
+                    ></v-rating>
+                    <div class="grey--text ml-2">
+                      {{ store_list.rating }}
+                    </div>
+                  </v-row>
+                </v-card-text>
+              </v-card-subtitle>
             </v-card>
           </v-col>
         </v-row>
@@ -74,7 +89,6 @@ export default {
         // let result = response.result;
 
         let { data } = result;
-        // console.log(data);
 
         data.forEach((e) => {
           let name = e.name.replace(/ \(.+\)/,'');
@@ -82,11 +96,23 @@ export default {
             id: e.id,
             img: e.img,
             name: name,
+            rating: e.rating
           });
         });
       });
     },
+    duplicate_store(store_id) {
+      if(this.$store.state.cart.cartitems.length > 0 && store_id != this.$store.state.cart.cartitems[0].data.store_id){
+        this.$store.dispatch("cart/deleteallitems", {store_id}).then(() => {
+          this.$router.push({ path: '/menu/'+store_id });
+        });
+      } else {
+        this.$router.push({ path: '/menu/'+store_id });
+      }
+    }
   },
+  mounted: function(){
+  }
 };
 </script>
 <style scoped>

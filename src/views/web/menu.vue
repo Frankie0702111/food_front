@@ -1,13 +1,12 @@
 <template>
-  <v-main class="grey lighten-2">
+  <v-main class="lighten-2">
     <v-row class="my-n3">
-      <v-col cols="12" v-for="store in store_list" :key="store.img">
+      <v-col cols="12" v-for="store in store_list" :key="store.id">
         <v-img :src="store.img" aspect-ratio="3"></v-img>
       </v-col>
     </v-row>
 
     <v-container>
-      <!-- <v-card max-width="30%" class="mx-auto"> -->
         <v-container>
           <div v-for="menu_list in tmp_category" :key="menu_list.category_id">
             <h2 class="d-flex" v-text="menu_list.name"></h2>
@@ -19,10 +18,13 @@
                   min-height="100%"
                   max-height="100%"
                   color="#FFFFFF"
+                  elevation="0"
+                  style="border:solid 1px #E0E0E0;"
+                  class="pa-3"
                 >
                   <div class="d-flex flex-no-wrap justify-space-between"
                   v-for="menu in menu_list.items" :key="menu.id">
-                    <div>
+                    <div v-for="store in store_list" :key="store.id">
                       <v-card-title
                         class="headline"
                         v-text="menu.name"
@@ -41,6 +43,7 @@
                           height="40px"
                           right
                           width="40px"
+                          @click="cart_additems(store.id, store.name, menu.id, menu.name, menu.price)"
                         >
                           <v-icon>mdi-clipboard-plus</v-icon>
                         </v-btn>
@@ -71,34 +74,46 @@ const stores_resource = new resource("web_store");
 
 export default {
   data: () => ({
-    items: [
-      {
-        color: '#FFFFFF',
-        src: 'https://cdn.vuetifyjs.com/images/cards/halcyon.png',
-        title: 'Halcyon Days',
-        artist: 'Ellie Goulding',
-      },
-    ],
     store_list: [],
-    menus_list: [],
     test: [],
     tmp_category: []
   }),
+  watch: {
+    '$store.state.cart.totalcount': function (){
+      if(this.$store.state.cart.totalcount > 0){
+        this.$parent.$parent.$parent.drawer = null;
+      }else if(this.$store.state.cart.totalcount < 1) {
+        this.$parent.$parent.$parent.drawer = false;
+      } else {
+        this.$parent.$parent.$parent.drawer = !null;
+      }
+    }
+  },
   created() {
     this.store_show();
     this.menus_show();
   },
   methods: {
+    cart_additems(store_id, store_name, menu_id, menu_name, price) {
+      this.$store.dispatch("cart/additems", {
+        store_id, store_name, menu_id, menu_name, price
+      });
+    },
     store_show() {
       stores_resource.show(this.$route.params.id).then((response) => {
-        this.store_list.push({img:response.result.store.img});
+        let {result} = response;
+        let {store} = result;
+        this.store_list.push({
+          id: store.id,
+          name: store.name,
+          img: store.img,
+          });
       });
     },
     menus_show() {
       // console.log(this.$route);
       menus_resource.show(this.$route.params.id).then((response) => {
         let {result} = response;
-
 
 
 
@@ -161,7 +176,7 @@ export default {
     },
   },
   mounted: function(){
-  this.$parent.$parent.$parent.drawer = null;
+  // this.$parent.$parent.$parent.drawer = null;
   },
   destroyed: function(){
     this.$parent.$parent.$parent.drawer = '';

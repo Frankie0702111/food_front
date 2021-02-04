@@ -9,50 +9,31 @@
       >
         <v-list dense>
           <v-list-item
-            v-for="item in items"
-            :key="item.text"
-            link
+            v-for="item in cartitems"
+            :key="item.data.menu_id"
           >
             <v-list-item-action>
-              <v-icon>{{ item.icon }}</v-icon>
+              <v-btn
+                class="mr-n3"
+                fab
+                icon
+                height= "35px"
+                width= "35px"
+                @click="cart_destroy(item.data.menu_id)"
+              >
+                <v-icon>mdi-delete-forever</v-icon>
+              </v-btn>
             </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title>
-                {{ item.text }}
+                {{ item.data.menu_name }}
               </v-list-item-title>
+              <v-list-item-subtitle>
+                {{ $t('money')+' : '+item.data.price }}
+                {{ $t('quantity')+' : '+item.data.count }}
+              </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
-          <!-- <v-subheader class="mt-4 grey--text text--darken-1">SUBSCRIPTIONS</v-subheader>
-          <v-list>
-            <v-list-item
-              v-for="item in items2"
-              :key="item.text"
-              link
-            >
-              <v-list-item-avatar>
-                <img
-                  :src="`https://randomuser.me/api/portraits/men/${item.picture}.jpg`"
-                  alt=""
-                >
-              </v-list-item-avatar>
-              <v-list-item-title v-text="item.text"></v-list-item-title>
-            </v-list-item>
-          </v-list>
-          <v-list-item
-            class="mt-4"
-            link
-          >
-            <v-list-item-action>
-              <v-icon color="grey darken-1">mdi-plus-circle-outline</v-icon>
-            </v-list-item-action>
-            <v-list-item-title class="grey--text text--darken-1">Browse Channels</v-list-item-title>
-          </v-list-item>
-          <v-list-item link>
-            <v-list-item-action>
-              <v-icon color="grey darken-1">mdi-cog</v-icon>
-            </v-list-item-action>
-            <v-list-item-title class="grey--text text--darken-1">Manage Subscriptions</v-list-item-title>
-          </v-list-item> -->
         </v-list>
       </v-navigation-drawer>
   
@@ -61,9 +42,20 @@
         clipped-left
         color="white"
         dense
+        elevation="1"
       >
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer">
+        <v-app-bar-nav-icon @click="cart_check()">
+        <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer"> -->
           <v-icon>mdi-cart-variant</v-icon>
+          <v-badge
+            color="blue"
+            :content="this.$store.state.cart.totalcount"
+            bordered
+            offset-x="1"
+            offset-y="-2"
+            v-if="this.$store.state.cart.totalcount > 0"
+          >
+          </v-badge>
         </v-app-bar-nav-icon>
         <v-toolbar-title class="mr-12 align-center">
           <span class="title">Pondalife</span>
@@ -91,33 +83,7 @@
           </div>
         </v-row>
       </v-app-bar>
-
       <router-view></router-view>
-      <!-- <v-main>
-        <v-container class="fill-height">
-          <v-row
-            justify="center"
-            align="center"
-          >
-            <v-col class="shrink">
-              <v-tooltip right>
-                <template v-slot:activator="{ on }">
-                  <v-btn
-                    :href="source"
-                    icon
-                    large
-                    target="_blank"
-                    v-on="on"
-                  >
-                    <v-icon large>mdi-code-tags</v-icon>
-                  </v-btn>
-                </template>
-                <span>Source</span>
-              </v-tooltip>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-main> -->
     </v-app>
   </v-app>
 </template>
@@ -127,34 +93,41 @@ import {mapState} from 'vuex'
   export default {
     data: () => ({
       drawer: false,
-      items: [
-        { icon: 'mdi-trending-up', text: 'Most Popular' },
-        { icon: 'mdi-youtube-subscription', text: 'Subscriptions' },
-        { icon: 'mdi-history', text: 'History' },
-        { icon: 'mdi-playlist-play', text: 'Playlists' },
-        { icon: 'mdi-clock', text: 'Watch Later' },
-      ],
-      // items2: [
-      //   { picture: 28, text: 'Joseph' },
-      //   { picture: 38, text: 'Apple' },
-      //   { picture: 48, text: 'Xbox Ahoy' },
-      //   { picture: 58, text: 'Nokia' },
-      //   { picture: 78, text: 'MKBHD' },
-      // ],
+      cart: {
+        totalcount: null,
+      },
     }),
     methods:{
-      user_logout(){
+      user_logout() {
         this.$store.dispatch("user/logout");
+      },
+      cart_destroy(menu_id) {
+        this.$store.dispatch("cart/deleteitem", {menu_id});
+      },
+      cart_check() {
+        if(this.$store.state.cart.cartitems.length > 0 && this.$route.fullPath != '/menu/'+this.$store.state.cart.cartitems[0].data.store_id) {
+          this.$router.push({ path: '/menu/'+this.$store.state.cart.cartitems[0].data.store_id });
+        } else {
+          this.drawer = !this.drawer;
+        }
       }
     },
     mounted: function(){
       // console.log(this.drawer);
-      console.log('path : '+this.$route.name);
+      console.log('totalcount : '+this.cart.totalcount);
+      console.log('fullpath : '+this.$route.fullPath);
       console.log('username : '+this.$store.state.user.name);
     },
-    computed: mapState({
-      username: state => state.user.name,
-    }),
+    computed: {
+      ...mapState({
+        username: state => state.user.name,
+      }),
+
+      // cartitems => v-for
+      cartitems() {
+        return this.$store.state.cart.cartitems;
+      },
+    }
   }
 </script>
 
