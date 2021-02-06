@@ -39,7 +39,7 @@ export const routes = [
       {
         path: 'menu/:id',
         name: 'menu',
-        component: loadView('menu'),
+        component: loadView('Menu'),
         meta: { title: 'menu'}
       }
     ]

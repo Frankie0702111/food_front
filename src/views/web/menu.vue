@@ -1,5 +1,5 @@
 <template>
-  <v-main class="grey lighten-2">
+  <v-main class="lighten-2">
     <v-row class="my-n3">
       <v-col cols="12" v-for="store in store_list" :key="store.id">
         <v-img :src="store.img" aspect-ratio="3"></v-img>
@@ -18,6 +18,9 @@
                   min-height="100%"
                   max-height="100%"
                   color="#FFFFFF"
+                  elevation="0"
+                  style="border:solid 1px #E0E0E0;"
+                  class="pa-3"
                 >
                   <div class="d-flex flex-no-wrap justify-space-between"
                   v-for="menu in menu_list.items" :key="menu.id">
@@ -75,6 +78,17 @@ export default {
     test: [],
     tmp_category: []
   }),
+  watch: {
+    '$store.state.cart.totalcount': function (){
+      if(this.$store.state.cart.totalcount > 0){
+        this.$parent.$parent.$parent.drawer = null;
+      }else if(this.$store.state.cart.totalcount < 1) {
+        this.$parent.$parent.$parent.drawer = false;
+      } else {
+        this.$parent.$parent.$parent.drawer = !null;
+      }
+    }
+  },
   created() {
     this.store_show();
     this.menus_show();
@@ -100,7 +114,6 @@ export default {
       // console.log(this.$route);
       menus_resource.show(this.$route.params.id).then((response) => {
         let {result} = response;
-
 
 
 
@@ -163,7 +176,7 @@ export default {
     },
   },
   mounted: function(){
-  this.$parent.$parent.$parent.drawer = null;
+  // this.$parent.$parent.$parent.drawer = null;
   },
   destroyed: function(){
     this.$parent.$parent.$parent.drawer = '';

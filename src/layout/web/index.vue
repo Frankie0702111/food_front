@@ -42,10 +42,20 @@
         clipped-left
         color="white"
         dense
+        elevation="1"
       >
         <v-app-bar-nav-icon @click="cart_check()">
         <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer"> -->
           <v-icon>mdi-cart-variant</v-icon>
+          <v-badge
+            color="blue"
+            :content="this.$store.state.cart.totalcount"
+            bordered
+            offset-x="1"
+            offset-y="-2"
+            v-if="this.$store.state.cart.totalcount > 0"
+          >
+          </v-badge>
         </v-app-bar-nav-icon>
         <v-toolbar-title class="mr-12 align-center">
           <span class="title">Pondalife</span>
@@ -73,33 +83,7 @@
           </div>
         </v-row>
       </v-app-bar>
-
       <router-view></router-view>
-      <!-- <v-main>
-        <v-container class="fill-height">
-          <v-row
-            justify="center"
-            align="center"
-          >
-            <v-col class="shrink">
-              <v-tooltip right>
-                <template v-slot:activator="{ on }">
-                  <v-btn
-                    :href="source"
-                    icon
-                    large
-                    target="_blank"
-                    v-on="on"
-                  >
-                    <v-icon large>mdi-code-tags</v-icon>
-                  </v-btn>
-                </template>
-                <span>Source</span>
-              </v-tooltip>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-main> -->
     </v-app>
   </v-app>
 </template>
@@ -112,27 +96,7 @@ import {mapState} from 'vuex'
       cart: {
         totalcount: null,
       },
-      // newcart:[],
     }),
-    watch: {
-      // newcart:function(){
-      //   //重新做items
-      //   //統計總數量
-      // },
-      'cart.totalcount': function (){
-        this.totalcount = 0;
-        this.$store.state.cart.cartitems.forEach((e) => {
-          this.totalcount += e.data.count;
-        });
-        console.log(this.totalcount);
-      },
-      '$store.state.cart.cartitems': function (){
-        if(this.$store.state.cart.cartitems.length < 1){
-          this.totalcount = 0;
-        }
-        console.log(this.totalcount);
-      }
-    },
     methods:{
       user_logout() {
         this.$store.dispatch("user/logout");
@@ -150,21 +114,17 @@ import {mapState} from 'vuex'
     },
     mounted: function(){
       // console.log(this.drawer);
+      console.log('totalcount : '+this.cart.totalcount);
       console.log('fullpath : '+this.$route.fullPath);
-      console.log('path : '+this.$route.name);
       console.log('username : '+this.$store.state.user.name);
     },
     computed: {
       ...mapState({
         username: state => state.user.name,
       }),
-      
+
       // cartitems => v-for
       cartitems() {
-        console.log(this.$store.state.cart.cartitems);
-        this.$store.state.cart.cartitems.forEach((e) => {
-          this.cart.totalcount += e.data.count;
-        });
         return this.$store.state.cart.cartitems;
       },
     }
