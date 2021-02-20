@@ -11,6 +11,7 @@ const state = {
   id: null,
   uuid: null,
   name: null,
+  token: null,
   group: null,
   change_password: 0,
   information: {},
@@ -31,12 +32,18 @@ const mutations = {
   },
   SET_GROUP_ROLE_ID: (state, group_role_id) => {
     state.group_role_id = group_role_id;
-},  
+  },
   SET_CHANGE_PASSWORD: (state, change_password) => {
     state.change_password = change_password;
   },
   SET_INFORMATION: (state, information) => {
     state.information = information;
+  },
+  CHECK_TOKEN: (state, token) => {
+    state.token = token;
+  },
+  CLEAR_TOKEN: (state, token) => {
+    state.token = token;
   }
 };
 
@@ -56,11 +63,15 @@ const actions = {
     });
   },
 
-  // user set name
+  // User set name
   setName({ commit }, setName) {
     commit('SET_NAME', setName);
   },
 
+  // Check login or no
+  checkToken({ commit }, setToken) {
+    commit('CHECK_TOKEN', setToken);
+  },
   
   // // user logout
   logout({ commit }) {
@@ -68,6 +79,7 @@ const actions = {
       logout()
         .then(() => {
           commit('SET_NAME', null);
+          commit('CLEAR_TOKEN', null);
           removeToken();
           resolve();
         })

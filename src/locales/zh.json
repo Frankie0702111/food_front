@@ -12,5 +12,16 @@
   "money": "NT$",
   "create": "新增",
   "submit": "送出",
-  "cancel": "取消"
+  "cancel": "取消",
+  "address": "地址",
+  "firstname": "姓",
+  "lastname": "名",
+  "fullname": "姓名",
+  "email": "電子郵件",
+  "phone": "手機號碼",
+  "creditcard": "信用卡",
+  "cod": "貨到付款",
+  "valid_thru": "有效期限",
+  "cvc": "安全碼",
+  "totalprice": "總計金額"
 }

@@ -80,18 +80,13 @@ export default {
   }),
   watch: {
     '$store.state.cart.totalcount': function (){
-      if(this.$store.state.cart.totalcount > 0){
-        this.$parent.$parent.$parent.drawer = null;
-      }else if(this.$store.state.cart.totalcount < 1) {
-        this.$parent.$parent.$parent.drawer = false;
-      } else {
-        this.$parent.$parent.$parent.drawer = !null;
-      }
+      this.cart_show();
     }
   },
   created() {
     this.store_show();
     this.menus_show();
+    this.cart_show();
   },
   methods: {
     cart_additems(store_id, store_name, menu_id, menu_name, price) {
@@ -174,6 +169,15 @@ export default {
         console.log(this.tmp_category);
       });
     },
+    cart_show() {
+      if(this.$store.state.cart.totalcount > 0){
+        this.$parent.$parent.$parent.drawer = null;
+      }else if(this.$store.state.cart.totalcount < 1) {
+        this.$parent.$parent.$parent.drawer = false;
+      } else {
+        this.$parent.$parent.$parent.drawer = !null;
+      }
+    }
   },
   mounted: function(){
   // this.$parent.$parent.$parent.drawer = null;
