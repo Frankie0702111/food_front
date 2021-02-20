@@ -61,6 +61,7 @@
 
 <script>
 import { captcha,login } from '@/api/auth';
+// import { getToken } from '@/utils/auth';
 import store from '@/store';
 export default {
     name: 'login',
@@ -111,8 +112,10 @@ export default {
         submit () {
             if(this.$refs.form.validate()){
                 login(this.form).then((e) => {
+                    let token = e.result.token;
                     let setName = e.result.user.name;
                     store.dispatch('user/setName', setName);
+                    store.dispatch('user/checkToken', token);
                     this.$router.push({ path: this.redirect || '/' });
                 })
                 .catch(() => {

@@ -6,6 +6,7 @@
         v-model="drawer"
         app
         clipped
+        disable-resize-watcher
       >
         <v-list dense>
           <v-list-item
@@ -19,7 +20,7 @@
                 icon
                 height= "35px"
                 width= "35px"
-                @click="cart_destroy(item.data.menu_id)"
+                @click="cart_destroy(item.data.menu_id, item.data.price*item.data.count)"
               >
                 <v-icon>mdi-delete-forever</v-icon>
               </v-btn>
@@ -35,6 +36,15 @@
             </v-list-item-content>
           </v-list-item>
         </v-list>
+        <v-btn
+          text
+          color="#00B8D4"
+          block
+          @click="goto_order()"
+          v-if="$store.state.cart.totalcount > 0"
+        >
+          {{ $t("submit") + '訂單' }}
+        </v-btn>
       </v-navigation-drawer>
   
       <v-app-bar
@@ -93,16 +103,13 @@ import {mapState} from 'vuex'
   export default {
     data: () => ({
       drawer: false,
-      cart: {
-        totalcount: null,
-      },
     }),
     methods:{
       user_logout() {
         this.$store.dispatch("user/logout");
       },
-      cart_destroy(menu_id) {
-        this.$store.dispatch("cart/deleteitem", {menu_id});
+      cart_destroy(menu_id, totalprice) {
+        this.$store.dispatch("cart/deleteitem", {menu_id, totalprice});
       },
       cart_check() {
         if(this.$store.state.cart.cartitems.length > 0 && this.$route.fullPath != '/menu/'+this.$store.state.cart.cartitems[0].data.store_id) {
@@ -110,12 +117,20 @@ import {mapState} from 'vuex'
         } else {
           this.drawer = !this.drawer;
         }
+      },
+      goto_order() {
+        if(this.$store.state.user.token !== null){
+          this.$router.push({ path: '/order/'});
+        } else {
+          this.$router.push({ path: '/login/' });
+        }
       }
     },
     mounted: function(){
       // console.log(this.drawer);
-      console.log('totalcount : '+this.cart.totalcount);
-      console.log('fullpath : '+this.$route.fullPath);
+      console.log('totalcount : '+this.$store.state.cart.totalcount);
+      console.log('$route fullPath : '+this.$route.fullPath);
+      console.log('$router : ',this.$router);
       console.log('username : '+this.$store.state.user.name);
     },
     computed: {
