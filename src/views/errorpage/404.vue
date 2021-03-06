@@ -13,13 +13,30 @@
 </template>
 
 <script>
+import constantRoutes from "@/router/admin";
 export default {
   name: 'Page404',
+  methods: {
+    check_path() {
+      constantRoutes.map(e=>{
+        let path = (e.path+='/login');
+        if(path){
+          this.$router.push('/');
+        }
+      });
+    }
+  },
+
   computed: {
     message() {
       return this.$route.path+'找不到頁面 !';
     },
   },
+
+  mounted: function () {
+    console.log("404 test : ",constantRoutes);
+    this.check_path();
+  }
 };
 </script>
 
