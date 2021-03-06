@@ -39,12 +39,16 @@ const mutations = {
   SET_INFORMATION: (state, information) => {
     state.information = information;
   },
-  CHECK_TOKEN: (state, token) => {
+  SET_TOKEN: (state, token) => {
     state.token = token;
   },
-  CLEAR_TOKEN: (state, token) => {
-    state.token = token;
-  }
+  // },
+  // CHECK_TOKEN: (state, token) => {
+  //   state.token = token;
+  // },
+  // CLEAR_TOKEN: (state, token) => {
+  //   state.token = token;
+  // }
 };
 
 const actions = {
@@ -70,7 +74,7 @@ const actions = {
 
   // Check login or no
   checkToken({ commit }, setToken) {
-    commit('CHECK_TOKEN', setToken);
+    commit('SET_TOKEN', setToken);
   },
   
   // // user logout
@@ -79,7 +83,7 @@ const actions = {
       logout()
         .then(() => {
           commit('SET_NAME', null);
-          commit('CLEAR_TOKEN', null);
+          commit('SET_TOKEN', null);
           removeToken();
           resolve();
         })
@@ -139,12 +143,14 @@ const actions = {
   // },
 
   // rm id
-  // removeid({ commit }) {
-  //   return new Promise(() => {
-  //       commit('SET_ID', null);
-  //       commit('SET_UUID', null);
-  //   });
-  // },
+  removeid({ commit }) {
+    return new Promise(() => {
+      commit('SET_ID', null);
+      commit('SET_UUID', null);
+      commit('SET_NAME', null);
+      commit('SET_TOKEN', null);
+    });
+  },
 
   // remove token
 //   resetToken() {

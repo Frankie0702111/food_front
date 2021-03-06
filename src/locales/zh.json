@@ -11,6 +11,7 @@
   "quantity": "數量",
   "money": "NT$",
   "create": "新增",
+  "update": "更新",
   "submit": "送出",
   "cancel": "取消",
   "address": "地址",
@@ -23,5 +24,16 @@
   "cod": "貨到付款",
   "valid_thru": "有效期限",
   "cvc": "安全碼",
-  "totalprice": "總計金額"
+  "totalprice": "總計金額",
+  "front_end_layout": "前台頁面",
+  "store_name": "店家名稱",
+  "rating": "評分",
+  "tel": "電話",
+  "img": "圖片網址",
+  "opening_time": "開店時間",
+  "latitude": "緯度",
+  "longitude": "經度",
+  "distance": "距離",
+  "cuisines": "菜系",
+  "characteristics": "特點"
 }

@@ -111,6 +111,7 @@
                               :rules="rules.phone"
                               :label="$t('phone')"
                               counter="10"
+                              suffix="0912345678"
                               outlined
                               clearable
                               required
