@@ -1,50 +1,78 @@
-// import Layout_admin from '@/layout/admin';
-// /** When your routing table is too long, you can split it into small modules**/
-// function loadView(view) {
-//   return () => import(/* webpackChunkName: 'loadview/[request]' */ `@/views/admin/${view}`)
-// }
+import Layout_admin from '@/layout/admin';
+/** When your routing table is too long, you can split it into small modules**/
+function loadView(view) {
+  return () => import(/* webpackChunkName: 'loadview/[request]' */ `@/views/admin/${view}`)
+}
 
-// export const constantRoutes = [
-//   // {
-//   //   path: '/admin',
-//   //   name: 'dashboard',
-//   //   redirect: '/admin/dashboard',
-//   //   meta: { title: '首頁', icon: 'fas fa-border-none'},
-//   //   component: Layout_admin,
-//   //   children: [
-//   //     {
-//   //       path: 'dashboard',
-//   //       name: 'dashboard',
-//   //       meta: { title: '首頁'},
-//   //       component: loadView('Dashboard'),
-//   //     } 
-//   //   ]
-//   // }, {
-//   //   path: '/admin/information',
-//   //   name: 'user',
-//   //   redirect: '/admin/information/info',
-//   //   meta: { title: '個人設定', icon: 'fas fa-user'},
-//   //   component: Layout_admin,
-//   //   children: [
-//   //     {
-//   //       path: 'info',
-//   //       name: 'info',
-//   //       meta: { title: '個人資訊'},
-//   //       component: loadView('UserInfo'),
-//   //     }, {
-//   //       path: 'change_passwd',
-//   //       name: 'change_passwd',
-//   //       meta: { title: '修改密碼'},
-//   //       component: loadView('Change_password'),
-//   //     }, {
-//   //       path: 'schedule',
-//   //       name: 'schedule',
-//   //       meta: { title: '個人班表設定'},
-//   //       component: loadView('Schedule'),
-//   //     }
-//   //   ],
-//   // }
-// ]
+export const constantRoutes = [
+  {
+    path: '/admin',
+    name: 'dashboard',
+    redirect: '/admin/dashboard',
+    meta: { title: '首頁', icon: 'mdi-home'},
+    component: Layout_admin,
+    children: [
+      {
+        path: 'dashboard',
+        name: 'dashboard',
+        meta: { title: '首頁'},
+        component: loadView('Dashboard'),
+      } 
+    ]
+  },
+  {
+    path: '/admin/pondalife',
+    name: 'pondalife',
+    redirect: '/admin/pondalife/store',
+    meta: { title: '餐廳設定', icon: 'mdi-silverware-clean'},
+    component: Layout_admin,
+    children: [
+        {
+            path: 'store',
+            name: 'store',
+            meta: { title: '餐廳'},
+            component: loadView('Store'),
+        },
+        // {
+        //     path: 'store1',
+        //     name: 'store1',
+        //     meta: { title: '測試1'},
+        //     component: loadView('Store'),
+        // },
+        // {
+        //     path: 'store2',
+        //     name: 'store2',
+        //     meta: { title: '測試2'},
+        //     component: loadView('Store'),
+        // }
+    ]
+  }
+//   {
+//     path: '/admin/information',
+//     name: 'user',
+//     redirect: '/admin/information/info',
+//     meta: { title: '個人設定', icon: 'fas fa-user'},
+//     component: Layout_admin,
+//     children: [
+//       {
+//         path: 'info',
+//         name: 'info',
+//         meta: { title: '個人資訊'},
+//         component: loadView('UserInfo'),
+//       }, {
+//         path: 'change_passwd',
+//         name: 'change_passwd',
+//         meta: { title: '修改密碼'},
+//         component: loadView('Change_password'),
+//       }, {
+//         path: 'schedule',
+//         name: 'schedule',
+//         meta: { title: '個人班表設定'},
+//         component: loadView('Schedule'),
+//       }
+//     ],
+//   }
+]
 
 // export const asyncRoutes = [
 //   {
@@ -139,4 +167,4 @@
 //   },
 // ];
 
-// export default constantRoutes
+export default constantRoutes

@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Page404 from '@/views/errorpage/404'
 import Layout from '@/layout/web';
-// import admin from './admin';
+import admin from './admin';
 
 Vue.use(VueRouter)
 
@@ -11,7 +11,7 @@ function loadView(view){
 }
 
 export const routes = [
-  // ...admin,
+  ...admin,
   {
     path: '/',
     name: 'Welcome',
@@ -39,8 +39,14 @@ export const routes = [
       {
         path: 'menu/:id',
         name: 'menu',
-        component: loadView('Menu'),
+        component: loadView('menu'),
         meta: { title: 'menu'}
+      },
+      {
+        path: 'order',
+        name: 'order',
+        component: loadView('Order'),
+        meta: { title: 'order'}
       }
     ]
   },
@@ -50,7 +56,7 @@ export const routes = [
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes : routes
 })
 
 export default router
